@@ -1,7 +1,8 @@
 from .shortcuts import get_current_usersettings
+from django.utils.deprecation import MiddlewareMixin
 
 
-class CurrentUserSettingsMiddleware(object):
+class CurrentUserSettingsMiddleware(MiddlewareMixin):
     """
     Middleware that sets `usersettings` attribute to request object.
     """
