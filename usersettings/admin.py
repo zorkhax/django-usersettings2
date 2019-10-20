@@ -3,7 +3,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib.admin.helpers import AdminErrorList, AdminForm
 from django.contrib.admin.widgets import AdminRadioSelect
-from django.contrib.auth.admin import csrf_protect_m
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sites.models import Site
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.urls import reverse
@@ -48,7 +48,7 @@ class SettingsAdmin(admin.ModelAdmin):
         obj.user = request.user
         super(SettingsAdmin, self).save_model(request, obj, form, change)
 
-    @csrf_protect_m
+    @csrf_exempt
     def add_view(self, request, form_url='', extra_context=None):
         site_id = request.GET.get('site_id', None)
 
@@ -145,7 +145,7 @@ class SettingsAdmin(admin.ModelAdmin):
             'admin/select_site_form.html'
         ], context)
 
-    @csrf_protect_m
+    @csrf_exempt
     def changelist_view(self, request, extra_context=None):
         sites_count = Site.objects.count()
         if sites_count == 1:
